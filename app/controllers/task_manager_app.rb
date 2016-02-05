@@ -7,9 +7,9 @@ class TaskManagerApp < Sinatra::Base
 
   get "/tasks" do
     if params[:title]
-      TaskManager.find_by(tilte: params[:title])
+      task_manager.find_by(tilte: params[:title])
     else
-      @tasks = TaskManager.all
+      @tasks = task_manager.all
     end
     erb :index
   end

@@ -31,6 +31,6 @@ class TaskManager
   end
 
   def self.find_by(input)
-    database.where(input.keys.first => input.keys.last)
+    database.where(input.keys.first => input)
   end
 end
