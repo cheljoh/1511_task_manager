@@ -16,7 +16,7 @@ class TaskManagerTest < Minitest::Test
     task_manager.create(
       title:       "title1",
       description: "description1"
-    )
+      )
 
     task = task_manager.all.last
 
@@ -58,7 +58,7 @@ class TaskManagerTest < Minitest::Test
     }
 
     id = task_manager.all.last.id
-    
+
     task_manager.update(new_data, id)
 
     updated_task = task_manager.find(id)
@@ -67,15 +67,17 @@ class TaskManagerTest < Minitest::Test
     assert_equal new_data[:description], updated_task.description
   end
 
-  # def test_it_deletes_a_task_record
-  #   create_tasks(3)
+  def test_it_deletes_a_task_record
+    create_tasks(3)
     
-  #   initial_count = task_manager.all.count
-    
-  #   task_manager.delete(2)
+    initial_count = task_manager.all.count
 
-  #   final_count = task_manager.all.count
+    id = task_manager.all.last.id
 
-  #   assert_equal 1, (initial_count - final_count)
-  # end 
+    task_manager.delete(id)
+
+    final_count = task_manager.all.count
+
+    assert_equal 1, (initial_count - final_count)
+  end 
 end
