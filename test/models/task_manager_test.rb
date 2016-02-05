@@ -1,6 +1,6 @@
 require_relative "../test_helper"
 
-class TaskManagerTest < Minitest::Test 
+class TaskManagerTest < Minitest::Test
   include TestHelpers
 
   def create_tasks(num)
@@ -23,7 +23,7 @@ class TaskManagerTest < Minitest::Test
     assert task.id
     assert_equal "title1", task.title
     assert_equal "description1", task.description
-  end 
+  end
 
   def test_it_finds_all_tasks
     create_tasks(3)
@@ -52,14 +52,16 @@ class TaskManagerTest < Minitest::Test
   def test_it_updates_a_task_record
     create_tasks(2)
 
-    new_data = { 
+    new_data = {
       :title => "NEW title",
-      :description => "NEW description" 
+      :description => "NEW description"
     }
 
-    task_manager.update(new_data, 2)
+    id = task_manager.all.last.id
 
-    updated_task = task_manager.find(2)
+    task_manager.update(new_data, id)
+
+    updated_task = task_manager.find(id)
 
     assert_equal new_data[:title], updated_task.title
     assert_equal new_data[:description], updated_task.description
@@ -67,13 +69,15 @@ class TaskManagerTest < Minitest::Test
 
   def test_it_deletes_a_task_record
     create_tasks(3)
-    
+
     initial_count = task_manager.all.count
-    
-    task_manager.delete(2)
+
+    id = task_manager.all.last.id
+
+    task_manager.delete(id)
 
     final_count = task_manager.all.count
 
     assert_equal 1, (initial_count - final_count)
-  end 
+  end
 end

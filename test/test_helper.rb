@@ -5,14 +5,22 @@ require 'minitest/autorun'
 require 'minitest/pride'
 require 'tilt/erb'
 
+DatabaseCleaner[:sequel, {:connection => Sequel.sqlite("db/task_manager_test.sqlite3")}].strategy = :truncation
+
 module TestHelpers
+
+  def setup
+    DatabaseCleaner.start
+    super
+  end
+
   def teardown
-    task_manager.delete_all
+    DatabaseCleaner.clean
     super
   end
 
   def task_manager
-    database = YAML::Store.new('db/task_manager_test')
+    database = Sequel.sqlite("db/task_manager_test.sqlite3")
     @task_manager ||= TaskManager.new(database)
   end
 end
