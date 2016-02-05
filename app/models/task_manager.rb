@@ -30,7 +30,8 @@ class TaskManager
     dataset.where(:id => id).delete
   end
 
-  def self.find_by(input)
-    database.where(input.keys.first => input)
+  def find_by(input)
+    data = dataset.where(:title => input.values).to_a.first
+    Task.new(data)
   end
 end

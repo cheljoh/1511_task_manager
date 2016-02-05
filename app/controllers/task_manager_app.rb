@@ -6,12 +6,16 @@ class TaskManagerApp < Sinatra::Base
   end
 
   get "/tasks" do
+    title = params[:title]
     if params[:title]
-      task_manager.find_by(tilte: params[:title])
+      @task = task_manager.find_by(title: params[:title])
+      erb :show
+      # require 'pry'
+      # binding.pry
     else
       @tasks = task_manager.all
+      erb :index
     end
-    erb :index
   end
 
   get "/tasks/new" do
@@ -44,7 +48,7 @@ class TaskManagerApp < Sinatra::Base
   end
 
   not_found do
-    erb :error 
+    erb :error
   end
 
   def task_manager

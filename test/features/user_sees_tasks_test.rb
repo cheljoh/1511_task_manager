@@ -19,6 +19,7 @@ class UserSeesAllTasksTest < FeatureTest
     visit "/tasks"
 
     click_link("title1")
+
     assert_equal "/tasks/#{task.id}", current_path
     assert page.has_content?("description1")
   end
@@ -26,12 +27,12 @@ class UserSeesAllTasksTest < FeatureTest
   def test_filter_task_index_by_param
     create_tasks(1)
 
-    task_manager.create({ 
+    task_manager.create({
       :title       => "dogsitting",
       :description => "Friday"
     })
 
-    task_manager.create({ 
+    task_manager.create({
       :title       => "dogsitting",
       :description => "Saturday"
     })
@@ -41,11 +42,14 @@ class UserSeesAllTasksTest < FeatureTest
     selected_tasks = task_manager.all.select { |task| task.title == "dogsitting"}
 
     selected_tasks.each do |task|
-      within("#task-#{task.id}") do
+      id = task.id
+      within("#task") do
+        save_and_open_page
         assert page.has_content?("dogsitting")
       end
     end
 
     refute page.has_content?("title1")
   end
+
 end
