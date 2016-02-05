@@ -5,7 +5,7 @@ class UserCanEditAnExistingTask < FeatureTest
     task_manager.create({ title: 'Original Title',
                          description: 'Original Description' })
 
-    visit '/tasks/1/edit'
+    visit '/tasks/#{id}/edit'
 
     fill_in 'task[title]', with: 'Updated Title'
     fill_in 'task[description]', with: 'Updated Description'
